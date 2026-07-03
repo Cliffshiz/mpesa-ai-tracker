@@ -34,6 +34,19 @@ workflows:
               }
           }
           EOF
+      - name: Disable code shrinking for release build
+        script: |
+          cat >> android/app/build.gradle << 'EOF'
+
+          android {
+              buildTypes {
+                  release {
+                      minifyEnabled false
+                      shrinkResources false
+                  }
+              }
+          }
+          EOF
       - name: Get Flutter packages
         script: |
           flutter pub get
