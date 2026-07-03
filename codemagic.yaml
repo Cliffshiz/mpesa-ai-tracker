@@ -34,18 +34,14 @@ workflows:
               }
           }
           EOF
-      - name: Disable code shrinking for release build
+      - name: Add ProGuard rules for optional ML Kit language packs
         script: |
-          cat >> android/app/build.gradle << 'EOF'
-
-          android {
-              buildTypes {
-                  release {
-                      minifyEnabled false
-                      shrinkResources false
-                  }
-              }
-          }
+          cat >> android/app/proguard-rules.pro << 'EOF'
+          -dontwarn com.google.mlkit.vision.text.chinese.**
+          -dontwarn com.google.mlkit.vision.text.japanese.**
+          -dontwarn com.google.mlkit.vision.text.korean.**
+          -dontwarn com.google.mlkit.vision.text.devanagari.**
+          -keep class com.google.mlkit.vision.text.** { *; }
           EOF
       - name: Get Flutter packages
         script: |
