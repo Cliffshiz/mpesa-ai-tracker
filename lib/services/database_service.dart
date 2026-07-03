@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/transaction.dart';
 
 /// Handles all local persistence. Uses Hive with an AES-256 encryption key
-/// stored in the platform Keystore/Keychain via flutter_secure_storage â€”
+/// stored in the platform Keystore/Keychain via flutter_secure_storage —
 /// so even a rooted-device file copy of the .hive box is unreadable
 /// without the secure-storage key. No data ever leaves the device unless
 /// the user explicitly enables cloud backup elsewhere in Settings.
@@ -36,7 +37,7 @@ class DatabaseService {
     return key;
   }
 
-  /// De-duplicates by transactionId before inserting â€” safe to call this
+  /// De-duplicates by transactionId before inserting — safe to call this
   /// repeatedly on every SMS scan without creating duplicate entries.
   static Future<bool> insertIfNew(MpesaTransaction txn) async {
     final exists = _box.values.any((t) => t.transactionId == txn.transactionId);
@@ -61,7 +62,7 @@ class DatabaseService {
     await txn.save();
   }
 
-  /// Full wipe â€” used for the "Delete All Data" privacy control. Also
+  /// Full wipe — used for the "Delete All Data" privacy control. Also
   /// rotates the encryption key so nothing is recoverable from disk.
   static Future<void> wipeAllData() async {
     await _box.clear();
