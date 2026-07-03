@@ -1,4 +1,4 @@
-import 'package:telephony/telephony.dart';
+import 'package:telephony/telephony.dart' hide NetworkType;
 import 'package:workmanager/workmanager.dart';
 import 'sms_parser_service.dart';
 import 'categorization_service.dart';
@@ -22,7 +22,7 @@ void callbackDispatcher() {
 }
 
 /// Scans the device SMS inbox for M-Pesa messages, parses new ones, and
-/// stores them. Safe to call repeatedly â€” insertIfNew() de-dupes.
+/// stores them. Safe to call repeatedly — insertIfNew() de-dupes.
 Future<int> scanAndImportNewSms({String accountLabel = 'Default'}) async {
   final telephony = Telephony.instance;
   final granted = await telephony.requestSmsPermissions ?? false;
@@ -48,7 +48,7 @@ Future<int> scanAndImportNewSms({String accountLabel = 'Default'}) async {
 }
 
 /// Registers the periodic background scan. Android WorkManager enforces a
-/// 15-minute minimum interval for periodic tasks â€” for near-real-time
+/// 15-minute minimum interval for periodic tasks — for near-real-time
 /// capture, pair this with a live SMS BroadcastReceiver listener
 /// (telephony.listenIncomingSms) while the app is foregrounded/backgrounded
 /// but not killed, and rely on this periodic task as the reliability net.
