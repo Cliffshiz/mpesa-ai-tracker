@@ -58,7 +58,7 @@ Future<void> registerBackgroundScan() async {
     'mpesa-scan',
     smsScanTaskName,
     frequency: const Duration(minutes: 15),
-    constraints: Constraints(networkType: NetworkType.not_required),
+    constraints: Constraints(networkType: NetworkType.notRequired),
   );
 }
 
