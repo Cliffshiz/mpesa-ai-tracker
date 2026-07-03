@@ -50,8 +50,12 @@ workflows:
       - name: Generate Hive adapter files
         script: |
           flutter pub run build_runner build --delete-conflicting-outputs
-      - name: Build APK
+      - name: Build APK directly with Gradle
         script: |
-          flutter build apk --release
+          cd android
+          ./gradlew assembleRelease
+          cd ..
+          echo "Searching for the built APK:"
+          find . -name "*.apk"
     artifacts:
-      - build/**/outputs/**/*.apk
+      - "**/*.apk"
