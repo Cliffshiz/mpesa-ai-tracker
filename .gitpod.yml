@@ -1,0 +1,22 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup Flutter project
+    init: |
+      flutter create --org com.mpesaaitracker --project-name mpesa_ai_tracker temp_shell
+      cp -r temp_shell/android .
+      cp -r temp_shell/ios .
+      rm -rf temp_shell
+      flutter pub get
+      flutter pub run build_runner build --delete-conflicting-outputs
+      echo "Setup complete. Run 'flutter build apk --release' when ready."
+
+ports:
+  - port: 8080
+    onOpen: ignore
+
+vscode:
+  extensions:
+    - Dart-Code.flutter
+    - Dart-Code.dart-code
